@@ -4,6 +4,7 @@ import br.senai.sc.editoralivros.security.service.GoogleService;
 import br.senai.sc.editoralivros.security.service.JpaService;
 import br.senai.sc.editoralivros.security.users.UserJpa;
 import ch.qos.logback.core.joran.action.NOPAction;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,13 +32,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Configuration
-@EnableWebSecurity
+@AllArgsConstructor
 public class AutenticacaoConfig {
 
-    @Autowired
     private JpaService jpaService;
 
-    @Autowired
     private GoogleService googleService;
 
     // Configura as autorizações de acesso
