@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de livros</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+  crossorigin="anonymous">
+</head>
+
+<body class="bg-light">
+    <header class="bg-dark bg-gradient text-center">
+      <h1 class="display-3 text-white p-4">Cadastrar Livro</h1>
+    </header>
+    <main>
+      <form class="mb-3 container">
+        <div class="mb-3">
+          <label for="titulo" class="ms-2 form-label fw-semibold">Título</label>
+          <input type="text" id="titulo" name="titulo" placeholder="Título" class="form-control"/>
+        </div>
+        <div class="mb-3">
+          <label for="isbn" class="ms-2 form-label fw-semibold">ISBN</label>
+          <input type="number" id="isbn" name="isbn" placeholder="123" class="form-control"/>
+        </div>
+        <div class="mb-3">
+          <label for="qtdPag" class="ms-2 form-label fw-semibold">Quantidade de páginas</label>
+          <input type="number" id="qtdPag" name="qtdPag" placeholder="321" class="form-control"/>
+        </div>
+        <div class="mb-3">
+          <label for="status" class="ms-2 form-label fw-semibold">Atualizar status</label>
+          <select id="status" name="status" class="form-control">
+            <option disabled selected>Selecione um status</option>
+            <option>Status</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label for="status" class="ms-2 form-label fw-semibold">Anexos</label>
+          <input type="file" multiple class="form-control">
+        </div>
+        <div class="d-flex flex-row mb-4">
+          <div class="container ps-0">
+            <a>
+            <button type="button" class="w-100 btn btn-secondary fw-semibold">Voltar</button>
+            </a>
+          </div>
+          <div class="container pe-0">
+            <button type="submit" class="w-100 btn btn-primary fw-semibold">Cadastrar</button>
+          </div>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>

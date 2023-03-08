@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+		  integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+</head>
+<body class="bg-light ">
+    <header class="bg-dark bg-gradient">
+        <h1 class="display-3 text-center text-white p-4">Home</h1>
+            <nav class="navbar bg-light shadow mb-4">
+                <div class="container-fluid">
+                    <a class="navbar-brand fw-semibold">Cadastrar livro</a>
+                    <a class="navbar-brand fw-semibold">Cadastrar revisor</a>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Pesquisa">
+                        <button class="btn btn-primary fw-semibold" type="submit">Pesquisar</button>
+                    </form>
+                    <form class="position-relative" th:action="@{/editora-livros-api/logout}" method="post">
+                        <button type="submit" class="btn btn-primary fw-semibold">Logout</button>
+                    </form>
+                </div>
+            </nav>
+    </header>
+    <main>
+        <div class="container-fluid d-flex">
+            <a class="w-25 text-decoration-none">
+				<div class="card m-1 shadow">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/dc/SSI_20210401161422_V-first_harry_potter_book.jpg" class="card-img-top">
+					<div class="card-body">
+						<h5 class="card-title">Título</h5>
+						<p class="card-text">Autor</p>
+					</div>
+				</div>
+            </a>
+        </div>
+    </main>
+</body>
+</html>
