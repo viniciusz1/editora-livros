@@ -1,6 +1,8 @@
 package br.senai.sc.editoralivros.security;
 
+import br.senai.sc.editoralivros.model.entity.Pessoa;
 import br.senai.sc.editoralivros.security.service.JpaService;
+import br.senai.sc.editoralivros.security.users.UserJpa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
@@ -24,9 +29,10 @@ public class AutenticacaoController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @PostMapping
+    @PostMapping("/auth")
     public ResponseEntity<Object> autenticacao(
-            @RequestBody @Valid UsuarioDTO usuarioDTO) {
+            @RequestBody @Valid UsuarioDTO usuarioDTO,
+            HttpServletResponse response) {
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(
@@ -38,8 +44,11 @@ public class AutenticacaoController {
 
         if (authentication.isAuthenticated()) {
             String token = tokenUtils.gerarToken(authentication);
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new TokenDTO("Bearer",token));
+            Cookie cookie = new Cookie("jwt", token);
+            UserJpa userJpa = (UserJpa) authentication.getPrincipal();
+            Pessoa pessoa = userJpa.getPessoa();
+            response.addCookie(cookie);
+            return ResponseEntity.ok(pessoa);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }

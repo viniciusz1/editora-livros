@@ -25,16 +25,24 @@ public class AutenticacaoFiltro extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = request.getHeader("Authorization");
-        if (token != null && token.startsWith("Bearer ")) {
-            token = token.substring(7);
-        } else {
-            token = null;
+        if(request.getRequestURI().equals("/login") ||
+            request.getRequestURI().equals("/login/auth")){
+            filterChain.doFilter(request,response);
+            return;
         }
+//        String token = request.getHeader("Authorization");
+//        if (token != null && token.startsWith("Bearer ")) {
+//            token = token.substring(7);
+//        } else {
+//            token = null;
+//        }
+        String token = tokenUtils.buscarCookie(request);
         Boolean valido = tokenUtils.validarToken(token);
         if (valido) {
             Long usuarioCPF = tokenUtils.getUsuarioCPF(token);
-            UserDetails usuario = jpaService.loadUserByUsername(usuarioCPF.toString());
+            UserDetails usuario = jpaService.loadUserByCPF(usuarioCPF);
+
+//            UserDetails usuario = jpaService.loadUserByUsername(usuarioCPF.toString());
 
 
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
@@ -43,10 +51,9 @@ public class AutenticacaoFiltro extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(
                     usernamePasswordAuthenticationToken
             );
-        } else if (!request.getRequestURI().equals("/editora-livros-api/login") ||
-                !request.getRequestURI().equals("/editora-livros-api/usuarios")) {
-            response.setStatus(401);
+            filterChain.doFilter(request, response);
+            return;
         }
-        filterChain.doFilter(request, response);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 }
