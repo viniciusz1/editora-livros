@@ -6,9 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Value;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 public class UserJpa implements UserDetails {
@@ -37,5 +40,16 @@ public class UserJpa implements UserDetails {
     @Override
     public String getUsername() {
         return pessoa.getEmail();
+    }
+
+    @Override
+    public Collection<GrantedAuthority> getAuthorities(){
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        //quando for implementado no low, fazer com enum
+        //colocar na pessoa uma lista de granted authorities
+        authorities.add(new SimpleGrantedAuthority(
+                this.getPessoa().getClass().getSimpleName()
+        ));
+        return authorities;
     }
 }

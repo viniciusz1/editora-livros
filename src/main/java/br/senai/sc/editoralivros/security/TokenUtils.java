@@ -26,6 +26,13 @@ public class TokenUtils {
                 .compact();
     }
 
+    public Cookie gerarCookie(Authentication authentication){
+        Cookie cookie = new Cookie("jwt", gerarToken(authentication));
+        cookie.setPath("/");
+        cookie.setSecure(true);
+        cookie.setMaxAge(5000);
+        return cookie;
+    }
 
     public Boolean validarToken(String token) {
         try {

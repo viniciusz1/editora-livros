@@ -43,12 +43,9 @@ public class AutenticacaoController {
         System.out.println(authentication.isAuthenticated());
 
         if (authentication.isAuthenticated()) {
-            String token = tokenUtils.gerarToken(authentication);
-            Cookie cookie = new Cookie("jwt", token);
+            response.addCookie(tokenUtils.gerarCookie(authentication));
             UserJpa userJpa = (UserJpa) authentication.getPrincipal();
-            Pessoa pessoa = userJpa.getPessoa();
-            response.addCookie(cookie);
-            return ResponseEntity.ok(pessoa);
+            return ResponseEntity.ok(userJpa.getPessoa());
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }

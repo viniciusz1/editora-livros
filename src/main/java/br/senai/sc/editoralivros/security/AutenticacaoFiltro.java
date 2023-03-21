@@ -25,8 +25,9 @@ public class AutenticacaoFiltro extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getRequestURI().equals("/login") ||
-            request.getRequestURI().equals("/login/auth")){
+        if(
+            request.getRequestURI().equals("/login/auth") ||
+        request.getRequestURI().equals("/logout")){
             filterChain.doFilter(request,response);
             return;
         }
