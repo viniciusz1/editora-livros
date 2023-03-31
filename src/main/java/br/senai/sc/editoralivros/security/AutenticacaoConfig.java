@@ -52,11 +52,11 @@ public class AutenticacaoConfig {
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 
-    private CorsConfigurationSource configurationSource() {
+    private   CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration =
                 new CorsConfiguration();
         corsConfiguration.setAllowedOrigins(List.of(
-                "https://localhost:3000"
+                "http://localhost:3000"
         ));
         corsConfiguration.setAllowedMethods(List.of(
                 "POST", "DELETE", "GET", "PUT"
@@ -79,7 +79,7 @@ public class AutenticacaoConfig {
                 // Determina que todas as demais requisições terão de ser autenticadas
                 .anyRequest().authenticated();
         httpSecurity.csrf().disable();
-        httpSecurity.cors().configurationSource(configurationSource());
+        httpSecurity.cors().configurationSource(corsConfigurationSource());
         httpSecurity.logout().permitAll();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(new AutenticacaoFiltro(new TokenUtils(), jpaService), UsernamePasswordAuthenticationFilter.class);
